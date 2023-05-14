@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Electronic Clock</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<style>
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		.clock {
+			display: flex;
+			align-items: center;
+		}
+
+		.separator {
+			margin: 0 0.5em;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="clock">
+		<img id="hours-tens" src="clock/0.gif">
+		<img id="hours-ones" src="clock/0.gif">
+		<img class="separator" src="clock/points.gif">
+		<img id="minutes-tens" src="clock/0.gif">
+		<img id="minutes-ones" src="clock/0.gif">
+		<img class="separator" src="clock/points.gif">
+		<img id="seconds-tens" src="clock/0.gif">
+		<img id="seconds-ones" src="clock/0.gif">
+	</div>
+
+	<script>
+		function updateTime() {
+			var now = new Date();
+			var hours = now.getHours();
+			var minutes = now.getMinutes();
+			var seconds = now.getSeconds();
+
+			updateClockPart('hours', Math.floor(hours / 10));
+			updateClockPart('minutes', Math.floor(minutes / 10));
+			updateClockPart('seconds', Math.floor(seconds / 10));
+
+			updateClockPart('hours', hours % 10, true);
+			updateClockPart('minutes', minutes % 10, true);
+			updateClockPart('seconds', seconds % 10, true);
+		}
+
+		function updateClockPart(part, value, isOnes) {
+			var img = document.getElementById(part + '-' + (isOnes ? 'ones' : 'tens'));
+			img.src = 'clock/' + value + '.gif';
+		}
+
+		// Update the time immediately
+		updateTime();
+
+		// Update the time every second
+		setInterval(updateTime, 1000);
+	</script>
+</body>
+
+</html>
